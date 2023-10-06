@@ -1,7 +1,31 @@
+# main.py
 import streamlit as st
 import qa
 from vector_search import find_match
+from langsmith import Client
 
+# Langsmith client setup
+client = Client()
+dataset_name = "QnA Dataset"
+
+try:
+    dataset = client.create_dataset(
+        dataset_name=dataset_name, description="User questions and system responses.",
+    )
+except Exception as e:
+    print(f"Error creating dataset: {e}")
+    # Here you'd ideally list all datasets, loop through them to find your dataset
+    # and then get its ID or handle. 
+    # For simplicity, I'm just printing the error. Adjust as per your needs.
+
+def log_interaction_to_langsmith(user_query, system_response):
+    client.create_example(
+        inputs={"user_query": user_query},
+        outputs={"system_response": system_response},
+        dataset_id=dataset.id,
+    )
+
+# Begin Streamlit App
 st.header("Asistente para Colegios Particulares Subvencionados en Chile")
 
 # Define conversation log
@@ -32,8 +56,12 @@ if query:  # Check if the user entered a query
         answer = qa.generate_answer(prompt)
         st.success(f"Respuesta: {answer}")
 
+        # Log the interaction to Langsmith
+        log_interaction_to_langsmith(query, answer)
+
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
