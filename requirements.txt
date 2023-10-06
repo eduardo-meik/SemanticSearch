@@ -3,3 +3,4 @@ openai
 sentence-transformers
 pinecone-client
 BeautifulSoup4
+langsmith
