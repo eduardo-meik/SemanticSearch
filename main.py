@@ -54,7 +54,6 @@ if query:  # Check if the user entered a query
 
         prompt = qa.create_prompt(res[max_score_index], refined_query)  # Use the highest scoring chunk to create a prompt for the OpenAI model
         answer = qa.generate_answer(prompt)
-        qa.log_interaction_to_langsmith(query, answer)
         st.success(f"Respuesta: {answer}")
 
         # Log the interaction to Langsmith
