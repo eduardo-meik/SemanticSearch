@@ -8,7 +8,7 @@ dataset_name = "QnA Dataset"
 # Ensure dataset exists or create it
 try:
     dataset = client.create_dataset(
-        dataset_name=dataset_name, description="User questions and system responses.",
+        dataset_name="QnA Dataset", description="User questions and system responses.",data_type="LLM"
     )
 except Exception as e:
     print(f"Error creating dataset: {e}")
