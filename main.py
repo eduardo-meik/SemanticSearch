@@ -57,7 +57,7 @@ if query:  # Check if the user entered a query
         st.success(f"Respuesta: {answer}")
 
         # Log the interaction to Langsmith
-        log_interaction_to_langsmith(query, answer, dataset.id)
+        log_interaction_to_langsmith(query, answer, "QnA Dataset")
 
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
