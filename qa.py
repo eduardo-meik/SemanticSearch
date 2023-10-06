@@ -3,17 +3,6 @@ from langsmith import Client
 
 # Initialize Langsmith client
 client = Client()
-dataset_name = "QnA Dataset"
-
-# Ensure dataset exists or create it
-try:
-    dataset = client.create_dataset(
-        dataset_name="QnA Dataset", description="User questions and system responses.",data_type="LLM"
-    )
-except Exception as e:
-    print(f"Error creating dataset: {e}")
-    # Note: In a real-world scenario, you'd handle this exception more gracefully or 
-    # ensure that the dataset is created beforehand.
 
 def create_prompt(context, query):
     header = ("Answer the question as truthfully as possible using the provided context, and if the answer is not contained within "
