@@ -22,7 +22,7 @@ def log_interaction_to_langsmith(user_query, system_response):
     client.create_example(
         inputs={"user_query": user_query},
         outputs={"system_response": system_response},
-        dataset_id="QnA Dataset",
+        dataset_id=dataset.id,
     )
 
 # Begin Streamlit App
