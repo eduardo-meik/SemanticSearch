@@ -10,7 +10,7 @@ def generate_answer(prompt):
         model="text-davinci-003",
         prompt=prompt,
         temperature=0.7,
-        max_tokens=512,
+        max_tokens=1024,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
@@ -23,7 +23,7 @@ def query_refiner(conversation, query):
         model="text-davinci-003",
         prompt=f"Given the following user query and conversation log, formulate a question that would be the most relevant to provide the user with an answer from a knowledge base.All anwser should in Spanish Language \n\nCONVERSATION LOG: \n{conversation}\n\nQuery: {query}\n\nRefined Query:",
         temperature=0.1,
-        max_tokens=512,
+        max_tokens=256,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
