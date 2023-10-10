@@ -26,23 +26,25 @@ if query:  # Check if the user entered a query
     button = st.button("Enviar")
 
     if button and refined_query:
-        # Displaying title (URL), highest scoring context, and its similarity score
-        context_display = f"Fuente: {urls[max_score_index]}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
-        st.expander("Contexto").markdown(context_display)  # Using markdown for structured content
+        # Check if the provided URL matches any in DOCLIST to get title and hyperlink
+        title_with_link = urls[max_score_index]  # default
+        for file_name, file_info in DOCLIST.items():
+            if urls[max_score_index] == file_info["link"]:
+                link = file_info["link"]
+                title = file_info["title"]
+                title_with_link = f'<a href="{link}" target="_blank">{title}</a>'
+
+        # Displaying title with link, highest scoring context, and its similarity score
+        context_display = f"Fuente: {title_with_link}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
+        st.expander("Contexto").markdown(context_display, unsafe_allow_html=True)  # Using markdown for structured content
 
         prompt = qa.create_prompt(res[max_score_index], refined_query)  # Use the highest scoring chunk to create a prompt for the OpenAI model
         answer = qa.generate_answer(prompt)
         st.success(f"Respuesta: {answer}")
 
-        # Check if the provided URL matches any in DOCLIST
-        for file_name, file_info in DOCLIST.items():
-            if urls[max_score_index] == file_info["link"]:
-                link = file_info["link"]
-                title = file_info["title"]
-                st.markdown(f'<a href="{link}" target="_blank">{title}</a>', unsafe_allow_html=True)
-
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
