@@ -2,6 +2,7 @@
 import streamlit as st
 import qa
 from vector_search import find_match
+from doclist import DOCLIST  # Import DOCLIST
 
 st.header("Asistente para Colegios Particulares Subvencionados en Chile")
 
@@ -33,8 +34,16 @@ if query:  # Check if the user entered a query
         answer = qa.generate_answer(prompt)
         st.success(f"Respuesta: {answer}")
 
+        # Check if the provided URL matches any in DOCLIST
+        for file_name, file_info in DOCLIST.items():
+            if urls[max_score_index] == file_info["link"]:
+                link = file_info["link"]
+                title = file_info["title"]
+                st.markdown(f'<a href="{link}" target="_blank">{title}</a>', unsafe_allow_html=True)
+
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
