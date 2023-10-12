@@ -9,8 +9,8 @@ def generate_answer(prompt):
     response = openai.Completion.create(
         model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
         prompt=prompt,
-        temperature=0.7,
-        max_tokens=1024,
+        temperature=1,
+        max_tokens=512,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
