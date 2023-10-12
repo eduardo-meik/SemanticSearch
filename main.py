@@ -8,7 +8,7 @@ st.markdown(
     """
     <style>
     input[type="text"] {
-        border: 1px solid red;
+        border: 1px rgb(255, 75, 75);
         border-radius: 4px;
     }
     </style>
