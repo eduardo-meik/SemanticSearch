@@ -24,13 +24,14 @@ def generate_answer(context, query):
 
 def query_refiner(conversation, query):
     messages = [
-        {"role": "system", "content": "Your role is to refine the user's query to be clearer and more specific, especially concerning Chilean subsidized private schools. Do not answer the query, just refine it. All refined queries must be in spanish language"},
+        {"role": "system", "content": "Your role is to refine the user's query to be clearer and more specific, especially concerning Chilean subsidized private schools. Do not answer the query, just refine it. All refined queries must be in Spanish language."},
         {"role": "user", "content": query}
     ]
 
     response = openai.ChatCompletion.create(
         model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
-        messages=messages
+        messages=messages,
+        max_tokens=39  # Limit response to 39 tokens
     )
 
     return response.choices[0].message['content'].strip()
