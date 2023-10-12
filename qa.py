@@ -10,17 +10,23 @@ def create_prompt(context, query):
 
 def generate_answer(context, query):
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that provides answers in Spanish about Chilean subsidized private schools.Answer in Spanish all the questions"},
+        {"role": "system", "content": "You are a helpful assistant that provides answers in Spanish about Chilean subsidized private schools. Answer in Spanish all the questions"},
         {"role": "user", "content": context},
         {"role": "user", "content": query}
     ]
 
     response = openai.ChatCompletion.create(
         model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
-        messages=messages
+        messages=messages,
+        max_tokens=150,  # Limit response to 150 tokens, but you can adjust this as needed.
+        temperature=0.7,  # A typical value; adjust for more or less randomness.
+        frequency_penalty=0.0,  # No penalty for frequent tokens. Adjust as needed.
+        presence_penalty=0.0,  # No penalty for new tokens. Adjust as needed.
+        stop=["\n"],  # Stop when a newline character is encountered. Adjust as needed.
     )
 
     return response.choices[0].message['content'].strip()
+
 
 def query_refiner(conversation, query):
     messages = [
@@ -31,7 +37,8 @@ def query_refiner(conversation, query):
     response = openai.ChatCompletion.create(
         model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
         messages=messages,
-        max_tokens=39  # Limit response to 39 tokens
+        max_tokens=39,  # Limit response to 39 tokens
+        temperature=0.5,
     )
 
     return response.choices[0].message['content'].strip()
