@@ -18,7 +18,7 @@ def generate_answer(context, query):
     response = openai.ChatCompletion.create(
         model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
         messages=messages,
-        max_tokens=150,  # Limit response to 150 tokens, but you can adjust this as needed.
+        max_tokens=256,  # Limit response to 150 tokens, but you can adjust this as needed.
         temperature=0.7,  # A typical value; adjust for more or less randomness.
         frequency_penalty=0.0,  # No penalty for frequent tokens. Adjust as needed.
         presence_penalty=0.0,  # No penalty for new tokens. Adjust as needed.
