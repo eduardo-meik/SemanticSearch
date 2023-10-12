@@ -25,17 +25,19 @@ def addData(corpusData, url):
         chunkInfo = (
             str(id+i),
             get_openai_embedding(chunk),  # Use the new embedding function
-            {'title': url, 'context': chunk}
+            {'title': url, 'link': '<LINK_GOES_HERE>', 'context': chunk} # assuming <LINK_GOES_HERE> is replaced with the actual link
         )
         index.upsert(vectors=[chunkInfo])
+
 
 def find_match(query, k):
     query_em = get_openai_embedding(query)  # Use the new embedding function
     result = index.query(query_em, top_k=k, includeMetadata=True)
     
-    titles = [result['matches'][i]['metadata']['source'] for i in range(k)]
-    contexts = [result['matches'][i]['metadata']['text'] for i in range(k)]
+    urls = [result['matches'][i]['metadata']['title'] for i in range(k)]  # changed from 'source' to 'title'
+    links = [result['matches'][i]['metadata']['link'] for i in range(k)]
+    contexts = [result['matches'][i]['metadata']['context'] for i in range(k)]
     scores = [result['matches'][i]['score'] for i in range(k)]  # Collect similarity scores
     
-    return titles, contexts, scores
+    return urls, links, contexts, scores
 
