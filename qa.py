@@ -23,20 +23,17 @@ def generate_answer(context, query):
     return response.choices[0].message['content'].strip()
 
 def query_refiner(conversation, query):
-    refinement_prompt = (f"Given the conversation log and the user query, refine or rephrase the user's query to make it more specific to the knowledge base about Chilean subsidized private schools. "
-                         f"Make sure the output is a refined version of the query and not an answer. "
-                         f"\n\nCONVERSATION LOG: \n{conversation}\n\nUser Query: {query}\n\nRefined Query:")
-    
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=refinement_prompt,
-        temperature=0.1,
-        max_tokens=256,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
+    messages = [
+        {"role": "system", "content": "Your role is to refine the user's query to be clearer and more specific, especially concerning Chilean subsidized private schools. Do not answer the query, just refine it."},
+        {"role": "user", "content": query}
+    ]
+
+    response = openai.ChatCompletion.create(
+        model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
+        messages=messages
     )
-    return response['choices'][0]['text'].strip()
+
+    return response.choices[0].message['content'].strip()
 
 
 
