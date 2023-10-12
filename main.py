@@ -1,3 +1,4 @@
+#main.py
 import streamlit as st
 import qa
 from vector_search import find_match
@@ -36,8 +37,8 @@ if query:  # Check if the user entered a query
 
     button = st.button("Enviar")
 
-   if button and refined_query:
-    # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
+    if button and refined_query:
+        # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
         file_info = DOCLIST.get(urls[max_score_index])
         if file_info:
             link = file_info["link"]
@@ -45,11 +46,10 @@ if query:  # Check if the user entered a query
             title_with_link = f"{title} (<a href='{link}' target='_blank'>link</a>)"
         else:
             title_with_link = urls[max_score_index]
-    
+
         # Displaying title with link, highest scoring context, and its similarity score
         context_display = f"Fuente: {title_with_link}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
         st.expander("Contexto").markdown(context_display, unsafe_allow_html=True)  # Using markdown for structured content
-
 
         # We'll use the highest scoring chunk as the context and the refined query as the query for the assistant
         context = res[max_score_index]
@@ -58,6 +58,7 @@ if query:  # Check if the user entered a query
 
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
