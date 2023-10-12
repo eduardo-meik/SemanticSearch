@@ -4,15 +4,6 @@ import qa
 from vector_search import find_match
 from doclist import DOCLIST  # Import DOCLIST
 
-# Custom CSS to add a red border to the text input
-st.markdown("""
-    <style>
-        [data-testid="stTextInput"] input {
-            border: 2px solid red !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 st.header("Asistente para Colegios Particulares Subvencionados en Chile")
 
 # Define conversation log
