@@ -1,4 +1,3 @@
-# main.py
 import streamlit as st
 import qa
 from vector_search import find_match
@@ -51,12 +50,14 @@ if query:  # Check if the user entered a query
         context_display = f"Fuente: {title_with_link}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
         st.expander("Contexto").markdown(context_display, unsafe_allow_html=True)  # Using markdown for structured content
 
-        prompt = qa.create_prompt(res[max_score_index], refined_query)  # Use the highest scoring chunk to create a prompt for the OpenAI model
-        answer = qa.generate_answer(prompt)
+        # We'll use the highest scoring chunk as the context and the refined query as the query for the assistant
+        context = res[max_score_index]
+        answer = qa.generate_answer(context, refined_query) # Adjusted call here
         st.success(f"Respuesta: {answer}")
 
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
