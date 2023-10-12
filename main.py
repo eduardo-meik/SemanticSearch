@@ -36,19 +36,20 @@ if query:  # Check if the user entered a query
 
     button = st.button("Enviar")
 
-    if button and refined_query:
-        # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
+   if button and refined_query:
+    # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
         file_info = DOCLIST.get(urls[max_score_index])
         if file_info:
             link = file_info["link"]
             title = file_info["title"]
-            title_with_link = f'<a href="{link}" target="_blank">{title}</a>'
+            title_with_link = f"{title} (<a href='{link}' target='_blank'>link</a>)"
         else:
             title_with_link = urls[max_score_index]
-
+    
         # Displaying title with link, highest scoring context, and its similarity score
         context_display = f"Fuente: {title_with_link}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
         st.expander("Contexto").markdown(context_display, unsafe_allow_html=True)  # Using markdown for structured content
+
 
         # We'll use the highest scoring chunk as the context and the refined query as the query for the assistant
         context = res[max_score_index]
