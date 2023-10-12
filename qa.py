@@ -7,7 +7,7 @@ def create_prompt(context, query):
 
 def generate_answer(prompt):
     response = openai.Completion.create(
-        model="ft:gpt-3.5-turbo-0613:personal::88asXE7W",
+        model="text-davinci-003",
         prompt=prompt,
         temperature=1,
         max_tokens=512,
