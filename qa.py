@@ -10,7 +10,7 @@ def create_prompt(context, query):
 
 def generate_answer(context, query):
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that provides answers in Spanish about Chilean subsidized private schools."},
+        {"role": "system", "content": "You are a helpful assistant that provides answers in Spanish about Chilean subsidized private schools.Answer in Spanish all the questions"},
         {"role": "user", "content": context},
         {"role": "user", "content": query}
     ]
