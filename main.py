@@ -1,4 +1,3 @@
-#main.py
 import streamlit as st
 import qa
 from vector_search import find_match
@@ -21,6 +20,10 @@ st.header("Asistente para Colegios Particulares Subvencionados en Chile")
 # Define conversation log
 conversation_log = ""  # Initialize with an empty log or pre-defined logs
 
+# At the beginning of your script:
+if 'refined_query' not in st.session_state:
+    st.session_state.refined_query = None
+
 # User input for the query
 query = st.text_input("Haz tu Consulta", key="query_input_key")  # Assigning a unique key
 
@@ -32,12 +35,13 @@ if query:  # Check if the user entered a query
     max_score_index = scores.index(max(scores))
 
     # Use the query refiner
-    refined_query = qa.query_refiner(conversation_log, query)
-    st.write(f"Consulta Refinada: {refined_query}")
+    if not st.session_state.refined_query:  # Only refine the query if it hasn't been refined already
+        st.session_state.refined_query = qa.query_refiner(conversation_log, query)
+    st.write(f"Consulta Refinada: {st.session_state.refined_query}")
 
     button = st.button("Enviar")
 
-    if button and refined_query:
+    if button and st.session_state.refined_query:
         # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
         file_info = DOCLIST.get(urls[max_score_index])
         if file_info:
@@ -53,11 +57,12 @@ if query:  # Check if the user entered a query
 
         # We'll use the highest scoring chunk as the context and the refined query as the query for the assistant
         context = res[max_score_index]
-        answer = qa.generate_answer(context, refined_query) # Adjusted call here
+        answer = qa.generate_answer(context, st.session_state.refined_query)  # Adjusted call here
         st.success(f"Respuesta: {answer}")
 
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
