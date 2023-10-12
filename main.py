@@ -43,7 +43,7 @@ if query:  # Check if the user entered a query
         if file_info:
             link = file_info["link"]
             title = file_info["title"]
-            title_with_link = f"{title} (<a href='{link}' target='_blank'>link</a>)"
+            title_with_link = f'<a href="{link}" target="_blank">{title}</a>'
         else:
             title_with_link = urls[max_score_index]
 
@@ -53,7 +53,7 @@ if query:  # Check if the user entered a query
 
         # We'll use the highest scoring chunk as the context and the refined query as the query for the assistant
         context = res[max_score_index]
-        answer = qa.generate_answer(context, refined_query)  # Adjusted call here
+        answer = qa.generate_answer(context, refined_query) # Adjusted call here
         st.success(f"Respuesta: {answer}")
 
         # Update conversation log (optional)
