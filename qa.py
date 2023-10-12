@@ -9,7 +9,7 @@ def generate_answer(prompt):
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
-        temperature=1,
+        temperature=0.7,
         max_tokens=512,
         top_p=1,
         frequency_penalty=0,
