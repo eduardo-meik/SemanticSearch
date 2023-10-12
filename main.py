@@ -36,30 +36,28 @@ if query:  # Check if the user entered a query
 
     button = st.button("Enviar")
 
-   if button and refined_query:
-    # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
-    file_info = DOCLIST.get(urls[max_score_index])
-    if file_info:
-        link = file_info["link"]
-        title = file_info["title"]
-        title_with_link = f'<a href="{link}" target="_blank">{title}</a>'
-    else:
-        title_with_link = urls[max_score_index]
+    if button and refined_query:
+        # Try to retrieve title and link from DOCLIST using urls[max_score_index] as key
+        file_info = DOCLIST.get(urls[max_score_index])
+        if file_info:
+            link = file_info["link"]
+            title = file_info["title"]
+            title_with_link = f'<a href="{link}" target="_blank">{title}</a>'
+        else:
+            title_with_link = urls[max_score_index]
 
-    # Prepend the document name and link
-    doc_info = f"Documento: {title}\nEnlace: <a href='{link}' target='_blank'>{link}</a>\n\n"
-
-    # Displaying title with link, highest scoring context, and its similarity score
-    context_display = f"{doc_info}Fuente: {title_with_link}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
-    st.expander("Contexto").markdown(context_display, unsafe_allow_html=True)  # Using markdown for structured content
+        # Displaying title with link, highest scoring context, and its similarity score
+        context_display = f"Fuente: {title_with_link}\n\n{res[max_score_index]}\n\n(Similarity: {scores[max_score_index]*100:.2f}%)"
+        st.expander("Contexto").markdown(context_display, unsafe_allow_html=True)  # Using markdown for structured content
 
         # We'll use the highest scoring chunk as the context and the refined query as the query for the assistant
         context = res[max_score_index]
-        answer = qa.generate_answer(context, refined_query) # Adjusted call here
+        answer = qa.generate_answer(context, refined_query)  # Adjusted call here
         st.success(f"Respuesta: {answer}")
 
         # Update conversation log (optional)
         conversation_log += f"User: {query}\nAssistant: {answer}\n"
+
 
 
 
