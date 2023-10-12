@@ -4,6 +4,18 @@ import qa
 from vector_search import find_match
 from doclist import DOCLIST  # Import DOCLIST
 
+st.markdown(
+    """
+    <style>
+    input[type="text"] {
+        border: 2px solid red;
+        border-radius: 4px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 st.header("Asistente para Colegios Particulares Subvencionados en Chile")
 
 # Define conversation log
