@@ -24,7 +24,7 @@ def generate_answer(context, query):
 
 def query_refiner(conversation, query):
     messages = [
-        {"role": "system", "content": "Your role is to refine the user's query to be clearer and more specific, especially concerning Chilean subsidized private schools. Do not answer the query, just refine it."},
+        {"role": "system", "content": "Your role is to refine the user's query to be clearer and more specific, especially concerning Chilean subsidized private schools. Do not answer the query, just refine it. All refined queries must be in spanish language"},
         {"role": "user", "content": query}
     ]
 
